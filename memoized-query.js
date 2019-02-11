@@ -1,43 +1,23 @@
 
 const MemoizedQueryModule = () => {
-  const cache = [];
+  const cache = {};
 
   findById = (str) => {
-    for (let i = 0; i < cache.length; i++) {
-      if (cache[i].query === str) {
-        console.log('cached', cache[i].element, cache);
-        return cache[i].element;
-      }
+    if (str in cache) {
+      return cache[str];
     }
 
-    let element = document.getElementById(`${str}`);
-    let newCacheItem = {
-      query: str,
-      element: element
-    }
-
-    cache.push(newCacheItem);
-    console.log('uncached', element, cache);
-    return element;
+    cache[str] = document.getElementById(str);
+    return cache[str];
   };
 
   findByCSSSelector = (str) => {
-    for (let i = 0; i < cache.length; i++) {
-      if (cache[i].query === str) {
-        console.log('cached', cache[i].element, cache);
-        return cache[i].element;
-      }
+    if (str in cache) {
+      return cache[str];
     }
 
-    let element = document.getElementById(`${str}`);
-    let newCacheItem = {
-      query: str,
-      element: element
-    }
-
-    cache.push(newCacheItem);
-    console.log('uncached', element, cache);
-    return element;
+    cache[str] = document.querySelector(str);
+    return cache[str];
   };
 
   return {
